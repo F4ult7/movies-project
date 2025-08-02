@@ -1,0 +1,45 @@
+
+.home {
+  max-width: 1200px;
+  margin: auto;
+  padding: 3rem;
+}
+
+.movies-collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2.5rem;
+}
+.movies-collection {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem;
+}
+.form-container {
+  margin: 30px auto;
+  max-width: 600px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container input[type="text"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px 20px;
+  border-radius: 30px;
+  border: none;
+  background-color: #2e2e2e;
+  color: #fff;
+  font-size: 1rem;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease;
+}
+
+.form-container input[type="text"]:focus {
+  outline: none;
+  background-color: #3a3a3a;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}

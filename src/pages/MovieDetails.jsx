@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import "./../css/Button.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { API_KEY, BASE_URL } from "../../API.JS";
+import "./../css/MovieDetails.css";
 
 function MovieDetails() {
   const { id } = useParams();
 
-  const [movie, setMovie] = useState();
+  const [movie, setMovie] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ author: "", comment: "" });
 
@@ -122,9 +124,12 @@ function MovieDetails() {
                     }}
                     required
                   ></textarea>
-                  <button type="submit">Save</button>
+                  <button type="submit" className="button">
+                    Save
+                  </button>
                   <button
                     type="button"
+                    className="button secondary"
                     onClick={function () {
                       setEditingReviewId(0);
                       setEditingReviewData({ author: "", comment: "" });
@@ -140,16 +145,14 @@ function MovieDetails() {
               <li key={review.id}>
                 <strong>{review.author}:</strong> {review.comment}
                 <button
-                  onClick={function () {
-                    handleEditClick(review);
-                  }}
+                  className="button secondary"
+                  onClick={() => handleEditClick(review)}
                 >
                   Edit
                 </button>
                 <button
-                  onClick={function () {
-                    handleDelete(review.id);
-                  }}
+                  className="button danger"
+                  onClick={() => handleDelete(review.id)}
                 >
                   Delete
                 </button>
@@ -159,7 +162,7 @@ function MovieDetails() {
         })}
       </ul>
 
-      <form onSubmit={handleNewReviewSubmit}>
+      <form onSubmit={handleNewReviewSubmit} className="form-container">
         <h4>Leave a Review ..</h4>
         <input
           type="text"
@@ -178,7 +181,9 @@ function MovieDetails() {
           }}
           required
         ></textarea>
-        <button type="submit">Submit Review</button>
+        <button type="submit" className="button">
+          Submit Review
+        </button>
       </form>
     </div>
   );

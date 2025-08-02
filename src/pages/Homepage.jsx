@@ -2,9 +2,11 @@ import MovieCard from "../components/MovieCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_KEY, BASE_URL } from "../../API.JS";
+import "./../css/MovieCard.css";
+import "./../css/Homepage.css";
 
 function Home() {
-  //user search input
+  // search input
   const [searchQuery, setSearchQuery] = useState("");
   //store the list of movies from DB
   const [movies, setMovies] = useState([]);
@@ -40,15 +42,15 @@ function Home() {
   }
   return (
     <div className="home">
-      <form onSubmit={handleSearch} className="search-form">
-        <input
-          type="text"
-          placeholder="Search for movies..."
-          className="Search-input"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </form>
+      <form onSubmit={handleSearch} className="form-container">
+  <input
+    type="text"
+    placeholder="Search for movies..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+</form>
+
 
       <div className="movies-collection">
         {movies

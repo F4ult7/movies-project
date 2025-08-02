@@ -1,0 +1,47 @@
+.movie-details {
+  max-width: 900px;
+  margin: 3rem auto;
+  background: #121212;
+  padding: 2rem;
+  border-radius: 12px;
+  color: #fff;
+}
+
+.movie-details h2 {
+  font-size: 2rem;
+  color: #ffc107;
+}
+
+.movie-details img {
+  width: 100%;
+  max-width: 300px;
+  display: block;
+  margin: 2rem auto;
+  border-radius: 10px;
+}
+
+.review-section {
+  margin-top: 2rem;
+}
+
+.review-list {
+  list-style: none;
+  padding: 0;
+}
+
+.review-item {
+  background: #1e1e1e;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.review-buttons {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.review-buttons .button {
+  font-size: 0.9rem;
+}

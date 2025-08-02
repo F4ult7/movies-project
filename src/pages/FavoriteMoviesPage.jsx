@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./../css/FavoriteMovies.css";
 
 function FavoriteMoviesPage() {
   const [favorites, setFavorites] = useState([]);
@@ -36,7 +37,7 @@ function FavoriteMoviesPage() {
                 style={{ width: "100px" }}
               />
               <p>{movie.title} ({movie.release_date?.slice(0, 4)})</p>
-              <button onClick={() => handleRemove(movie.id)}>Remove</button>
+              <button className="button" onClick={() => handleRemove(movie.id)}>Remove</button>
             </li>
           ))}
         </ul>

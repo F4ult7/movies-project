@@ -1,11 +1,14 @@
 import React from "react";
+import "./../css/About.css";
+
 
 function AboutPage() {
   return (
     <div className="about-container">
-      <h1>Couch Pota🍿</h1>
+      <h1>Couch Potato🍿</h1>
 
-      <p>(description of the app )</p>
+      <p> Couch Potato is amovie discovery app powered by the TMDB. Browse top-rated films,
+        save your favorites, and share your thoughts with reviews.</p>
       <h2>🎬 Features 🎬</h2>
       <ul>
         <li>Browse trending movies from TMDB🔥</li>
