@@ -1,59 +1,49 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-function MovieCard({ movie }) {
+function MovieCard({ movie, favorites, setFavorites }) {
   const imageURL = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   const [isFavorite, setIsFavorite] = useState(false);
-  const [favoriteId, setFavoriteId] = useState(); 
-
+  const [favoriteId, setFavoriteId] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:5005/favorites")
-      .then(res => res.json())
-      .then(data => {
-        const match = data.find((fav) => fav.tmdbId === movie.id);
-        if (match) {
-          setIsFavorite(true);
-          setFavoriteId(match.id); 
-        }
-      });
-  }, [movie.id]);
+    const match = favorites.find((fav) => fav.tmdbId === movie.id);
+    if (match) {
+      setIsFavorite(true);
+      setFavoriteId(match.id);
+    } else {
+      setIsFavorite(false);
+      setFavoriteId();
+    }
+  }, [favorites, movie.id]);
 
-  const handleFavoriteToggle = () => {
+  function handleFavoriteToggle() {
     if (isFavorite) {
-    
-      fetch(`http://localhost:5005/favorites/${favoriteId}`, {
-        method: "DELETE",
-      })
+      axios
+        .delete(`http://localhost:5005/favorites/${favoriteId}`)
         .then(() => {
           setIsFavorite(false);
           setFavoriteId();
-        })
-        .catch(err => console.error("Failed to remove favorite:", err));
+          setFavorites(favorites.filter((fav) => fav.id !== favoriteId));
+        });
     } else {
-      
-      const favoriteMovie = {
+      const newFavorite = {
         tmdbId: movie.id,
         title: movie.title,
         release_date: movie.release_date,
-        poster_path: movie.poster_path
+        poster_path: movie.poster_path,
       };
 
-      fetch("http://localhost:5005/favorites", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(favoriteMovie)
-      })
-        .then(res => res.json())
-        .then((data) => {
+      axios
+        .post("http://localhost:5005/favorites", newFavorite)
+        .then((res) => {
           setIsFavorite(true);
-          setFavoriteId(data.id); 
-        })
-        .catch(err => {
-          console.error("Error saving favorite:", err);
+          setFavoriteId(res.data.id);
+          setFavorites([...favorites, res.data]);
         });
     }
-  };
+  }
 
   return (
     <div className="movie-card">
