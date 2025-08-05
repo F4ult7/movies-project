@@ -1,25 +1,22 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { JSON_SERVER_URL } from "../../API.JS";
 import "./../css/FavoriteMovies.css";
 
 function FavoriteMoviesPage() {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(function () {
-    axios
-      .get("http://localhost:5005/favorites")
-      .then(function (response) {
-        setFavorites(response.data);
-      });
+    axios.get(`${JSON_SERVER_URL}/favorites`).then(function (response) {
+      setFavorites(response.data);
+    });
   }, []);
 
   function handleRemove(id) {
-    axios
-      .delete(`http://localhost:5005/favorites/${id}`)
-      .then(function () {
-        const updated = favorites.filter((movie) => movie.id !== id);
-        setFavorites(updated);
-      });
+    axios.delete(`${JSON_SERVER_URL}/favorites/${id}`).then(function () {
+      const updated = favorites.filter((movie) => movie.id !== id);
+      setFavorites(updated);
+    });
   }
 
   return (
@@ -36,8 +33,12 @@ function FavoriteMoviesPage() {
                 alt={movie.title}
                 style={{ width: "100px" }}
               />
-              <p>{movie.title} ({movie.release_date?.slice(0, 4)})</p>
-              <button className="button" onClick={() => handleRemove(movie.id)}>Remove</button>
+              <p>
+                {movie.title} ({movie.release_date?.slice(0, 4)})
+              </p>
+              <button className="button" onClick={() => handleRemove(movie.id)}>
+                Remove
+              </button>
             </li>
           ))}
         </ul>

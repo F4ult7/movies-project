@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "./../css/Button.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { API_KEY, BASE_URL } from "../../API.JS";
+import { API_KEY, BASE_URL, JSON_SERVER_URL } from "../../API.JS";
+import "./../css/Button.css";
 import "./../css/MovieDetails.css";
 
 function MovieDetails() {
@@ -26,7 +26,7 @@ function MovieDetails() {
         });
 
       axios
-        .get(`http://localhost:5005/reviews?tmdbId=${id}`)
+        .get(`${JSON_SERVER_URL}/reviews?tmdbId=${id}`)
         .then(function (response) {
           setReviews(response.data);
         });
@@ -37,17 +37,12 @@ function MovieDetails() {
   function handleNewReviewSubmit(event) {
     event.preventDefault();
 
-    const reviewToSend = {
-      ...newReview,
-      tmdbId: id,
-    };
+    const reviewToSend = { ...newReview, tmdbId: id };
 
-    axios
-      .post("http://localhost:5005/reviews", reviewToSend)
-      .then(function (response) {
-        setReviews([...reviews, response.data]);
-        setNewReview({ author: "", comment: "" });
-      });
+    axios.post(`${JSON_SERVER_URL}/reviews`, reviewToSend).then(function (res) {
+      setReviews([...reviews, res.data]);
+      setNewReview({ author: "", comment: "" });
+    });
   }
 
   function handleEditClick(review) {
@@ -59,16 +54,12 @@ function MovieDetails() {
     event.preventDefault();
 
     axios
-      .patch(
-        `http://localhost:5005/reviews/${editingReviewId}`,
-        editingReviewData
-      )
-      .then(function (response) {
-        const updated = response.data;
-        const updatedReviews = reviews.map(function (r) {
-          return r.id === updated.id ? updated : r;
-        });
-
+      .patch(`${JSON_SERVER_URL}/reviews/${editingReviewId}`, editingReviewData)
+      .then(function (res) {
+        const updated = res.data;
+        const updatedReviews = reviews.map((r) =>
+          r.id === updated.id ? updated : r
+        );
         setReviews(updatedReviews);
         setEditingReviewId(0);
         setEditingReviewData({ author: "", comment: "" });
@@ -76,9 +67,8 @@ function MovieDetails() {
   }
 
   function handleDelete(reviewId) {
-    axios.delete(`http://localhost:5005/reviews/${reviewId}`).then(function () {
-      const remaining = reviews.filter((r) => r.id !== reviewId);
-      setReviews(remaining);
+    axios.delete(`${JSON_SERVER_URL}/reviews/${reviewId}`).then(function () {
+      setReviews(reviews.filter((r) => r.id !== reviewId));
     });
   }
 
@@ -97,74 +87,67 @@ function MovieDetails() {
 
       <h3>User Reviews</h3>
       <ul>
-        {reviews.map(function (review) {
-          if (review.id === editingReviewId) {
-            return (
-              <li key={review.id}>
-                <form onSubmit={handleEditSave}>
-                  <input
-                    type="text"
-                    value={editingReviewData.author}
-                    onChange={function (e) {
-                      setEditingReviewData({
-                        ...editingReviewData,
-                        author: e.target.value,
-                      });
-                    }}
-                    required
-                  />
-                  <textarea
-                    value={editingReviewData.comment}
-                    onChange={function (e) {
-                      setEditingReviewData({
-                        ...editingReviewData,
-                        comment: e.target.value,
-                      });
-                    }}
-                    required
-                  ></textarea>
-                  <button type="submit" className="button">
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    className="button secondary"
-                    onClick={function () {
-                      setEditingReviewId(0);
-                      setEditingReviewData({ author: "", comment: "" });
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </form>
-              </li>
-            );
-          } else {
-            return (
-              <li key={review.id}>
-                <strong>{review.author}:</strong> {review.comment}
+        {reviews.map((review) =>
+          review.id === editingReviewId ? (
+            <li key={review.id}>
+              <form onSubmit={handleEditSave}>
+                <input
+                  type="text"
+                  value={editingReviewData.author}
+                  onChange={(e) =>
+                    setEditingReviewData({
+                      ...editingReviewData,
+                      author: e.target.value,
+                    })
+                  }
+                  required
+                />
+                <textarea
+                  value={editingReviewData.comment}
+                  onChange={(e) =>
+                    setEditingReviewData({
+                      ...editingReviewData,
+                      comment: e.target.value,
+                    })
+                  }
+                  required
+                ></textarea>
+                <button type="submit" className="button">
+                  Save
+                </button>
                 <button
+                  type="button"
                   className="button secondary"
-                  onClick={() => handleEditClick(review)}
+                  onClick={() => {
+                    setEditingReviewId(0);
+                    setEditingReviewData({ author: "", comment: "" });
+                  }}
                 >
-                  Edit
+                  Cancel
                 </button>
-                <button
-                  className="button danger"
-                  onClick={() => handleDelete(review.id)}
-                >
-                  Delete
-                </button>
-              </li>
-            );
-          }
-        })}
+              </form>
+            </li>
+          ) : (
+            <li key={review.id}>
+              <strong>{review.author}:</strong> {review.comment}
+              <button
+                className="button secondary"
+                onClick={() => handleEditClick(review)}
+              >
+                Edit
+              </button>
+              <button
+                className="button danger"
+                onClick={() => handleDelete(review.id)}
+              >
+                Delete
+              </button>
+            </li>
+          )
+        )}
       </ul>
 
-      <form
-        onSubmit={handleNewReviewSubmit}
-        className="form-container review-form"
-      >
+      <form onSubmit={handleNewReviewSubmit} className="form-container review-form">
         <h4 className="form-heading">Leave a Review</h4>
         <div className="form-fields">
           <input

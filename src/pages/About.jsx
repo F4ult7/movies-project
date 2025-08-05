@@ -13,6 +13,7 @@ function AboutPage() {
       <ul>
         <li>Browse trending movies from TMDB🔥</li>
         <li>Add and manage your favorite movies</li>
+           <li>Stream links coming soon..</li>
 
       </ul>
     </div>
