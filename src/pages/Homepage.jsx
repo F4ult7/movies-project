@@ -6,12 +6,13 @@ import "./../css/MovieCard.css";
 import "./../css/Homepage.css";
 
 function Home() {
-  // search input
+  // search
   const [searchQuery, setSearchQuery] = useState("");
-  //store the list of movies from DB
+  //store the list 
   const [movies, setMovies] = useState([]);
-  //store favorite movies from json-server ** work
+  //store favorite 
   const [favorites, setFavorites] = useState([]);
+
 
   useEffect(function () {
     // Fetch DB API
@@ -30,13 +31,12 @@ function Home() {
   function handleSearch(event) {
     event.preventDefault();
 
-    // Fetch movies that match search q
+    // Fetch movies that match search 
     axios
       .get(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${searchQuery}`)
       .then(function (response) {
         setMovies(response.data.results);
       });
-
     // Clear
     setSearchQuery("");
   }

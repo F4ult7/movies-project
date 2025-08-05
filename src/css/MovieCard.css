@@ -94,3 +94,8 @@
   font-size: 1.05rem;
   color: #ccc;
 }
+.movie-card-link {
+  text-decoration: none;
+  color: inherit;
+  
+}

@@ -1,12 +1,4 @@
 
-/* heart  */
-/* .like-btn {
-  font-size: 1.8rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-} */
 .like-btn:hover {
   transform: scale(1.2);
 }
@@ -36,7 +28,7 @@ textarea::placeholder {
   padding: 10px 16px;
   margin: 6px 4px;
   background-color: #ff9800;
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 6px;
   font-weight: bold;
@@ -50,7 +42,7 @@ textarea::placeholder {
 }
 
 .button.secondary {
-  background-color: #555;
+  background-color: #555555;
 }
 
 .button.secondary:hover {
@@ -64,18 +56,3 @@ textarea::placeholder {
 .button.delete:hover {
   background-color: #b71c1c;
 }
-.button {
-  background: #ff9800;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.button:hover {
-  background: #e68900;
-}
-

@@ -1,0 +1,33 @@
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-heading {
+  font-size: 1.2rem;
+  color: #ffc107;
+  margin-bottom: 8px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .form-fields {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .form-fields input,
+  .form-fields textarea {
+    flex: 1;
+  }
+
+  .form-fields button {
+    flex-shrink: 0;
+  }
+}

@@ -8,10 +8,9 @@ import "./../css/MovieDetails.css";
 function MovieDetails() {
   const { id } = useParams();
 
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState();
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ author: "", comment: "" });
-
   const [editingReviewId, setEditingReviewId] = useState(0);
   const [editingReviewData, setEditingReviewData] = useState({
     author: "",
@@ -162,28 +161,33 @@ function MovieDetails() {
         })}
       </ul>
 
-      <form onSubmit={handleNewReviewSubmit} className="form-container">
-        <h4>Leave a Review ..</h4>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={newReview.author}
-          onChange={function (e) {
-            setNewReview({ ...newReview, author: e.target.value });
-          }}
-          required
-        />
-        <textarea
-          placeholder="Your comment"
-          value={newReview.comment}
-          onChange={function (e) {
-            setNewReview({ ...newReview, comment: e.target.value });
-          }}
-          required
-        ></textarea>
-        <button type="submit" className="button">
-          Submit Review
-        </button>
+      <form
+        onSubmit={handleNewReviewSubmit}
+        className="form-container review-form"
+      >
+        <h4 className="form-heading">Leave a Review</h4>
+        <div className="form-fields">
+          <input
+            type="text"
+            placeholder="Your name"
+            value={newReview.author}
+            onChange={(e) =>
+              setNewReview({ ...newReview, author: e.target.value })
+            }
+            required
+          />
+          <textarea
+            placeholder="Your comment"
+            value={newReview.comment}
+            onChange={(e) =>
+              setNewReview({ ...newReview, comment: e.target.value })
+            }
+            required
+          ></textarea>
+          <button type="submit" className="button">
+            Submit Review
+          </button>
+        </div>
       </form>
     </div>
   );

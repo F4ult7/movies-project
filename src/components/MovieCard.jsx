@@ -45,23 +45,29 @@ function MovieCard({ movie, favorites, setFavorites }) {
     }
   }
 
+ 
   return (
-    <div className="movie-card">
-      <div className="movie-pic">
-        <img src={imageURL} alt={movie.title} />
-        <div className="movie-overlay">
-          <button className="like-btn" onClick={handleFavoriteToggle}>
-            {isFavorite ? "❤️" : "🤍"}
-          </button>
+    <Link to={`/movies/${movie.id}`} className="movie-card-link">
+      <div className="movie-card">
+        <div className="movie-pic">
+          <img src={imageURL} alt={movie.title} />
+          <div className="movie-overlay">
+            <button className="like-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                handleFavoriteToggle();
+              }}
+            >
+              {isFavorite ? "❤️" : "🤍"}
+            </button>
+          </div>
+        </div>
+        <div className="movie-info">
+          <h3>{movie.title}</h3>
+          <p>{movie.release_date?.slice(0, 4)}</p>
         </div>
       </div>
-      <div className="movie-info">
-        <Link to={`/movies/${movie.id}`}>
-          <h3>{movie.title}</h3>
-        </Link>
-        <p>{movie.release_date?.slice(0, 4)}</p>
-      </div>
-    </div>
+    </Link>
   );
 }
 
