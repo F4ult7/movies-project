@@ -21,7 +21,8 @@ function MovieCard({ movie, favorites, setFavorites }) {
   function handleFavoriteToggle() {
     if (isFavorite) {
       axios
-        .delete(`http://localhost:5005/favorites/${favoriteId}`)
+     axios
+  .delete(`${import.meta.env.VITE_JSONSERVER_URL}/favorites/${favoriteId}`)
         .then(() => {
           setIsFavorite(false);
           setFavoriteId();
@@ -36,7 +37,9 @@ function MovieCard({ movie, favorites, setFavorites }) {
       };
 
       axios
-        .post("http://localhost:5005/favorites", newFavorite)
+       axios
+  .post(`${import.meta.env.VITE_JSONSERVER_URL}/favorites`, newFavorite)
+
         .then((res) => {
           setIsFavorite(true);
           setFavoriteId(res.data.id);
